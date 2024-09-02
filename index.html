@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Countdown Extravaganza!</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: url('background.webp') center/cover no-repeat fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .container {
+            background-color: rgba(255, 105, 180, 0.75);
+            border-radius: 28px;
+            padding: 2.8rem;
+            text-align: center;
+            box-shadow: 0 0 28px rgba(0,0,0,0.3);
+            max-width: 90vw;
+        }
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.4rem;
+        }
+        p {
+            font-size: 1.4rem;
+        }
+        #countdown-seconds {
+            font-size: 5.6rem;
+            margin: 1.4rem 0;
+        }
+        #countdown-full {
+            font-size: 2.1rem;
+            margin-bottom: 1.4rem;
+        }
+        .keyboard {
+            font-size: 7rem;
+            animation: bounce 0.5s infinite alternate;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-28px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Keyboard Countdown Extravaganza!</h1>
+        <p>Seconds until key-mageddon:</p>
+        <div id="countdown-seconds"></div>
+        <div id="countdown-full"></div>
+        <div class="keyboard">⌨️</div>
+        <p>Prepare for the clickety-clack apocalypse!</p>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date("2024-09-03T18:40:00").getTime();
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            const totalSeconds = Math.floor(timeLeft / 1000);
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown-seconds").innerHTML = `${totalSeconds}`;
+            document.getElementById("countdown-full").innerHTML = `(${days}d ${hours}h ${minutes}m ${seconds}s)`;
+
+            if (timeLeft < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("countdown-seconds").innerHTML = "0";
+                document.getElementById("countdown-full").innerHTML = "Your keyboard has arrived! Time to type!";
+            }
+        }
+
+        const countdownTimer = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
